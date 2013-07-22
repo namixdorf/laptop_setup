@@ -1,0 +1,123 @@
+#!/usr/bin/env zsh
+
+successfully() {
+  $* || (echo "\nfailed" 1>&2 && exit 1)
+}
+
+fancy_echo() {
+  echo "\n$1"
+}
+
+if -f /etc/zshenv; then
+  fancy_echo "Fixing OSX zsh environment bug ..."
+    successfully sudo mv /etc/{zshenv,zshrc}
+fi
+
+fancy_echo "Installing Homebrew, a good OS X package manager ..."
+  successfully ruby <(curl -fsS https://raw.github.com/mxcl/homebrew/go)
+  successfully brew update
+
+if ! grep -qs "recommended by brew doctor" ~/.zshrc; then
+  fancy_echo "Put Homebrew location earlier in PATH ..."
+    successfully echo "\n# recommended by brew doctor" >> ~/.zshrc
+    successfully echo "export PATH='/usr/local/bin:$PATH'\n" >> ~/.zshrc
+    successfully source ~/.zshrc
+fi
+
+fancy_echo "Installing Postgres, a good open source relational database ..."
+  successfully brew install postgres --no-python
+  successfully initdb /usr/local/var/postgres -E utf8
+
+fancy_echo "Installing Redis, a good key-value database ..."
+  successfully brew install redis
+
+fancy_echo "Installing mysql, because it is usefuly ..."
+  successfully brew install mysql
+
+fancy_echo "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
+  successfully brew install the_silver_searcher
+
+fancy_echo "Installing ctags, to index files for vim tab completion of methods, classes, variables ..."
+  successfully brew install ctags
+
+fancy_echo "Installing tmux, to save project state and switch between projects ..."
+  successfully brew install tmux
+
+fancy_echo "Installing reattach-to-user-namespace, for copy-paste and RubyMotion compatibility with tmux ..."
+  successfully brew install reattach-to-user-namespace
+
+fancy_echo "Installing ImageMagick, to crop and resize images ..."
+  successfully brew install imagemagick
+
+fancy_echo "Installing ffmpeg, a command line tool for changing video encoding quickly, install with a lot of options ..."
+  successfully brew install ffmpeg --with-fdk-aac --with-ffplay --with-freetype --with-frei0r --with-libass --with-libvo-aacenc --with-libvorbis --with-libvpx --with-opencore-amr --with-openjpeg --with-opus --with-rtmpdump --with-schroedinger --with-speex --with-theora --with-tools
+
+fancy_echo "Installing QT, used by Capybara Webkit for headless Javascript integration testing ..."
+  successfully brew install qt
+
+fancy_echo "Installing watch, to execute a program periodically and show the output ..."
+  successfully brew install watch
+
+fancy_echo "Installing open_ssl ..."
+  successfully brew install openssl
+
+fancy_echo "Installing homebrew vim ..."
+  successfully brew install vim
+
+fancy_echo "Installing homebrew macvim ...'
+  successfully brew install macvim
+
+fancy_echo "Installing memcached, used for legacy apps ..."
+  successfully brew install memcached
+
+fancy_echo "Installing rbenv, to change Ruby versions ..."
+  successfully brew install rbenv
+
+  if ! grep -qs "rbenv init" ~/.zshrc; then
+    successfully echo 'eval "$(rbenv init -)"' >> ~/.zshrc
+
+    fancy_echo "Enable shims and autocompletion ..."
+      successfully eval "$(rbenv init -)"
+  fi
+
+  source ~/.zshrc
+
+fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
+  successfully brew install rbenv-gem-rehash
+
+fancy_echo "Installing ruby-build, to install Rubies ..."
+  successfully brew install ruby-build
+
+fancy_echo "Installing GNU Compiler Collection, a necessary prerequisite to installing Ruby ..."
+  successfully brew tap homebrew/dupes
+  successfully brew install apple-gcc42
+
+fancy_echo "Installing Ruby 2.0.0-p195 ..."
+  CONFIGURE_OPTS="--with-openssl-dir=`brew --prefix openssl`" CC=gcc-4.2 successfully rbenv install 2.0.0-p195
+
+fancy_echo "Setting Ruby 2.0.0-p195 as global default Ruby ..."
+  successfully rbenv global 2.0.0-p195
+  successfully rbenv shell 2.0.0-p195
+
+fancy_echo "Installing Ruby 1.9.3-p448 ..."
+  successfully rbenv install 1.9.3-p448
+
+fancy_echo "Installing Ruby 1.9.2-290 ..."
+  successfully rbenv install 1.9.2-p290
+
+fancy_echo "Installing Ruby 1.8.7-p374, FYI this has been retired but still needed for legacy projects ..."
+  successfully rbenv install 1.8.7-p374
+
+fancy_echo "Updating to latest Rubygems version ..."
+  successfully gem update --system
+
+fancy_echo "Installing critical Ruby gems for Rails development ..."
+  successfully gem install bundler foreman pg rails thin --no-document
+
+fancy_echo "Installing GitHub CLI client ..."
+  successfully gem install hub --no-document
+
+if ! grep -qs "DO NOT EDIT BELOW THIS LINE" ~/.zshrc; then
+  fancy_echo "Prepare ~/.zshrc for http://github.com/thoughtbot/dotfiles ..."
+    successfully echo "# DO NOT EDIT BELOW THIS LINE\n" >> ~/.zshrc
+fi

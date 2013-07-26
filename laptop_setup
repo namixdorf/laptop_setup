@@ -64,7 +64,7 @@ fancy_echo "Installing open_ssl ..."
 fancy_echo "Installing homebrew vim ..."
   successfully brew install vim
 
-fancy_echo "Installing homebrew macvim ...'
+fancy_echo "Installing homebrew macvim ..."
   successfully brew install macvim
 
 fancy_echo "Installing memcached, used for legacy apps ..."

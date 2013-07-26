@@ -11,4 +11,4 @@ Based on thoughbot's laptop script. https://github.com/thoughtbot/laptop
 chsh -s /bin/zsh
 
 3) Then run.
-zsh &lt;(curl -s https://gist.github.com/namixdorf/5810964)
+zsh &lt;(curl -s https://raw.github.com/namixdorf/laptop_setup/master/laptop_setup)

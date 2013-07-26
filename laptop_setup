@@ -113,6 +113,9 @@ fancy_echo "Installing critical Ruby gems for Rails development ..."
 
 fancy_echo "Installing GitHub CLI client ..."
   successfully gem install hub --no-document
+  
+fancy_echo "Installing POW ..."
+  successfully curl get.pow.cx | sh
 
 if ! grep -qs "DO NOT EDIT BELOW THIS LINE" ~/.zshrc; then
   fancy_echo "Prepare ~/.zshrc for http://github.com/thoughtbot/dotfiles ..."

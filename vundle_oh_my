@@ -1,0 +1,11 @@
+fancy_echo "downloading your dotfiles"
+  successfully git clone git@github.com:namixdorf/dotfiles.git
+
+fancy_echo "Installing oh-my-zsh ..."
+  successfully git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+
+fancy_echo "Installing vundle ..."
+  successfully git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+
+fancy_echo "Installing vundle plugins ..."
+  successfully vim +BundleInstall +qall

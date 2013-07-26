@@ -11,4 +11,8 @@ Based on thoughbot's laptop script. https://github.com/thoughtbot/laptop
 chsh -s /bin/zsh
 
 3) Then run.
+
 zsh &lt;(curl -s https://raw.github.com/namixdorf/laptop_setup/master/laptop_setup)
+
+4) 
+zsh &lt;(curl -s https://raw.github.com/namixdorf/laptop_setup/master/vundle_oh_my)
